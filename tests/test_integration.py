@@ -174,9 +174,13 @@ with tempfile.TemporaryDirectory(prefix="walscope-integration-") as directory:
         f = temp / f"short-{length}.wal"; f.write_bytes(original[:length])
         check(run("inspect", f, code=2).stdout == "", "truncated header is not a prefix proof")
     empty = temp / "empty.wal"; empty.write_bytes(b"")
-    check(report("inspect", empty)["summary"]["commits"] == 0, "zero-byte reset WAL")
+    empty_report = report("inspect", empty)
+    check(empty_report["summary"]["commits"] == 0, "zero-byte reset WAL")
+    check(not empty_report["wal"]["headerPresent"] and empty_report["wal"]["checksumByteOrder"] == "none", "empty capture cannot claim a checksum word order")
     header = temp / "header.wal"; header.write_bytes(original[:32])
-    check(report("inspect", header)["summary"]["validFrames"] == 0, "header-only WAL")
+    header_report = report("inspect", header)
+    check(header_report["summary"]["validFrames"] == 0, "header-only WAL")
+    check(header_report["wal"]["headerPresent"] and header_report["wal"]["checksumByteOrder"] in ("little", "big"), "valid header without frames still defines its word order")
     for position in (0, 4, 8, 24):
         raw = bytearray(original); raw[position] ^= 0x80
         f = temp / f"bad-header-{position}.wal"; f.write_bytes(raw)

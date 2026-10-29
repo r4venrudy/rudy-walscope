@@ -5,7 +5,7 @@
 static void common(const WsWal *wal, const char *kind, WsBuffer *out) {
   char digest[65]; ws_hex(wal->input.digest, digest);
   ws_append(out, "{\n  \"schema\":\"rudy-walscope/report-v1\",\"version\":\"%s\",\"kind\":\"%s\",\"complete\":%s,\n", WS_VERSION, kind, wal->tail == WS_TAIL_CLEAN ? "true" : "false");
-  ws_append(out, "  \"wal\":{\"blake3\":\"%s\",\"bytes\":%" PRIu64 ",\"pageSize\":%" PRIu32 ",\"checksumByteOrder\":\"%s\",\"checkpointSequence\":%" PRIu32 ",\"salts\":[%" PRIu32 ",%" PRIu32 "]},\n", digest, wal->input.size, wal->page_size, wal->checksum_big ? "big" : "little", wal->sequence, wal->salt[0], wal->salt[1]);
+  ws_append(out, "  \"wal\":{\"blake3\":\"%s\",\"bytes\":%" PRIu64 ",\"headerPresent\":%s,\"pageSize\":%" PRIu32 ",\"checksumByteOrder\":\"%s\",\"checkpointSequence\":%" PRIu32 ",\"salts\":[%" PRIu32 ",%" PRIu32 "]},\n", digest, wal->input.size, wal->input.size ? "true" : "false", wal->page_size, wal->input.size ? (wal->checksum_big ? "big" : "little") : "none", wal->sequence, wal->salt[0], wal->salt[1]);
   ws_append(out, "  \"summary\":{\"validFrames\":%" PRIu32 ",\"commits\":%" PRIu32 ",\"lastCommitFrame\":%" PRIu32 ",\"pendingFrames\":%" PRIu32 "},\n", wal->frame_count, wal->commit_count, wal->last_commit_frame, wal->frame_count - wal->last_commit_frame);
   ws_append(out, "  \"tail\":{\"status\":\"%s\",\"offset\":%" PRIu64 ",\"ignoredBytes\":%" PRIu64 "},\n", ws_tail_name(wal->tail), wal->tail_offset, wal->input.size - wal->tail_offset);
 }

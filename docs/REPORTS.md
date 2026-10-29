@@ -2,7 +2,7 @@
 
 Reports use `schema: rudy-walscope/report-v1` and a tool `version`. `complete` refers to physical validation through the captured file's end. A valid pending transaction does not make the file physically incomplete, but its frames never enter a committed image.
 
-- `wal`: whole-capture BLAKE3, byte length, page size, checksum word order, sequence, and salts.
+- `wal`: whole-capture BLAKE3, byte length, header presence, page size, checksum word order, sequence, and salts. An empty reset capture has `headerPresent: false`, `checksumByteOrder: "none"`, and zero-valued header fields; a validated header-only capture still defines its word order.
 - `summary`: validated frames, commit markers, last commit frame, and pending frames.
 - `tail`: first excluded byte offset, excluded byte count, and `clean`, `partial-frame`, `salt-mismatch`, `checksum-mismatch`, or `invalid-page-number`.
 - Inspection `commits`: 1-based commit ordinal, first/last frame, database size in pages, distinct pages written.
