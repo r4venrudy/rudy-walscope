@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="420" viewBox="0 0 1400 420" role="img" aria-labelledby="title desc">
+  <title id="title">Rudy WALScope</title><desc id="desc">Offline SQLite WAL forensics. Checksum chains, committed page versions, and evidence-preserving reconstruction. C11 developer preview.</desc>
+  <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#243448" stroke-width="1"/></pattern></defs>
+  <rect width="1400" height="420" rx="22" fill="#0a1018"/><rect x="5" y="20" width="6" height="380" fill="#55e0b6"/>
+  <rect x="880" y="20" width="490" height="280" fill="url(#grid)" opacity=".5"/>
+  <text x="55" y="69" fill="#55e0b6" font-family="monospace" font-size="18" letter-spacing="3">RUDY SYSTEMS / SQLITE WAL FORENSICS</text>
+  <text x="53" y="158" fill="#edf4fc" font-family="Arial,sans-serif" font-size="78" font-weight="700" letter-spacing="-3">Rudy WALScope</text>
+  <text x="56" y="218" fill="#97acc1" font-family="Arial,sans-serif" font-size="28">Follow the commits. Preserve the evidence.</text>
+  <text x="56" y="264" fill="#97acc1" font-family="Arial,sans-serif" font-size="22">Checksum chains. Page versions. Qualified reconstruction.</text>
+  <g fill="#101b28" stroke="#2e465a"><rect x="990" y="90" width="330" height="45" rx="6"/><rect x="990" y="155" width="330" height="45" rx="6"/><rect x="990" y="220" width="330" height="45" rx="6"/></g>
+  <g fill="#55e0b6" font-family="monospace" font-size="15"><text x="1011" y="119">CAPTURE / VALIDATED PREFIX</text><text x="1011" y="184">COMMIT / PAGE PROVENANCE</text><text x="1011" y="249">NEW IMAGE / CONTENT RECEIPT</text></g>
+  <path d="M55 322H1340" stroke="#243448"/>
+  <text x="56" y="373" fill="#55e0b6" font-family="monospace" font-size="19">C11 / BLAKE3 / OFFLINE</text>
+  <text x="1340" y="373" text-anchor="end" fill="#97acc1" font-family="monospace" font-size="17">DEVELOPER PREVIEW</text>
+</svg>

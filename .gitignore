@@ -1,0 +1,17 @@
+/build*/
+/stage/
+/dist/
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.wal
+*.exe
+*.dll
+*.pdb
+*.obj
+*.a
+*.o
+__pycache__/
+*.walscope-stage-*
