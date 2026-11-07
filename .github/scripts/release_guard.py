@@ -22,6 +22,8 @@ def validate_paths(records):
         normalized=posixpath.normpath(name).rstrip('/')
         if normalized in ('','.','..'):raise ValueError('empty release member')
         parts=normalized.split('/')
+        if any(len(part.encode('utf-8', errors='surrogatepass')) > 255 for part in parts):
+            raise ValueError('release path component exceeds 255 UTF-8 bytes')
         if any(character in '<>"|?*' for character in name):
             raise ValueError('nonportable Windows member name')
         devices={'con','prn','aux','nul'}|{'com'+str(i) for i in range(1,10)}|{'lpt'+str(i) for i in range(1,10)}
