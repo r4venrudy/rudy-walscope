@@ -109,13 +109,20 @@ def validate_zip_metadata(archive, member):
     position = archive.fp.tell()
     try:
         archive.fp.seek(member.header_offset)
-        header = archive.fp.read(10)
-        if len(header) != 10 or header[:4] != b"PK\x03\x04":
+        header = archive.fp.read(30)
+        if len(header) != 30 or header[:4] != b"PK\x03\x04":
             raise ValueError("invalid ZIP local metadata")
         import struct
-        _, flags, method = struct.unpack("<HHH", header[4:])
+        _, flags, method = struct.unpack("<HHH", header[4:10])
         if flags != member.flag_bits or method != member.compress_type:
             raise ValueError("ZIP local metadata disagrees with central record")
+        if flags & 8:
+            crc, packed, size = struct.unpack_from("<III", header, 14)
+            if (crc not in (0, member.CRC)
+                    or packed not in (0, 0xFFFFFFFF, member.compress_size)
+                    or size not in (0, 0xFFFFFFFF, member.file_size)):
+                raise ValueError("streamed ZIP local fields disagree with central record")
+            return
     finally:
         archive.fp.seek(position)
 
